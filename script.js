@@ -2,6 +2,7 @@ const searchField = document.getElementById('search-field');
 const searchBtn = document.getElementById('search-button');
 const errorDiv = document.getElementById('error-div');
 const noresultDiv = document.getElementById('noresult-div');
+const bookFound = document.getElementById('total-numbers');
 
 const toggleSpinner = displayStyle => {
     document.getElementById('spinner').style.display = displayStyle;
@@ -40,17 +41,20 @@ const displaySearchResult = (book) => {
 
     // console.log(book.docs);
     const bookDocs = book.docs;
-
+    bookFound.innerText = '';
     toggleSpinner('none');
     // toggleresult('block');
     noresultDiv.innerText = '';
     errorDiv.innerText = '';
+
     if (bookDocs == 0) {
         noresultDiv.innerText = 'No result found';
     }
+    document.getElementById('total-numbers').innerText = `Books Found ${book.numFound}`;
 
     bookDocs?.forEach(books => {
         // console.log(books);
+
         const div = document.createElement('div');
         div.classList.add('col');
         div.innerHTML = `
