@@ -1,9 +1,20 @@
 const searchField = document.getElementById('search-field');
 const searchBtn = document.getElementById('search-button');
 const errorDiv = document.getElementById('error-div');
+const noresultDiv = document.getElementById('noresult-div');
+
+const toggleSpinner = displayStyle => {
+    document.getElementById('spinner').style.display = displayStyle;
+}
+// const toggleresult = displayStyle => {
+//     document.getElementById('search-result').style.display = displayStyle;
+// }
+
 const searchBook = () => {
     const searchText = searchField.value;
-
+    // display spinner
+    toggleSpinner('block');
+    // toggleresult('none');
 
     if (searchText === '') {
         errorDiv.innerText = "Search field can't be empty";
@@ -20,14 +31,25 @@ const searchBook = () => {
 
 }
 
+
 const displaySearchResult = (book) => {
     const searchResult = document.getElementById('search-result');
     searchResult.textContent = "";
-    errorDiv.innerText = '';
+    // errorDiv.innerText = '';
+
 
     // console.log(book.docs);
     const bookDocs = book.docs;
-    bookDocs.forEach(books => {
+
+    toggleSpinner('none');
+    // toggleresult('block');
+    noresultDiv.innerText = '';
+    errorDiv.innerText = '';
+    if (bookDocs == 0) {
+        noresultDiv.innerText = 'No result found';
+    }
+
+    bookDocs?.forEach(books => {
         // console.log(books);
         const div = document.createElement('div');
         div.classList.add('col');
@@ -46,5 +68,7 @@ const displaySearchResult = (book) => {
         </div>
         `;
         searchResult.appendChild(div);
-    })
+    });
+
+
 }
